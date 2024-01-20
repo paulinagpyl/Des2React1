@@ -12,46 +12,54 @@ const Formulario = ({ setError }) => {
     e.preventDefault();
 
     const { nombre, email, password, confirmPassword } = formData;
-    const DatosValidar = !nombre || !email || !password|| !confirmPassword;
+    const DatosValidar = !nombre || !email || !password || !confirmPassword;
     const validarPass = password !== confirmPassword;
+    const validarMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
 
-    DatosValidar
-      ? setError({
-          error: true,
-          msg: "Debes completar todos los datos",
-          color: "warning",
-        })
-      : setError({
-          error: false,
-          msg: "Login creado exitosamente",
-          color: "success",
-        });
-    if (validarPass) {
+    if (DatosValidar) {
+      setError({
+        error: true,
+        msg: "Debes completar todos los datos",
+        color: "warning",
+      });
+    } else if (!validarMail.test(email)) {
+      setError({
+        error: true,
+        msg: "El formato del correo electrónico no es válido",
+        color: "warning",
+      });
+    } else {
       setError({
         error: false,
-        msg: "Las password no coinciden, prueba nuevamente",
+        msg: "Login creado exitosamente",
+        color: "success",
+      });
+    }
+
+    if (validarPass) {
+      setError({
+        error: true,
+        msg: "Las contraseñas no coinciden, prueba nuevamente",
         color: "danger",
       });
       return;
     }
-
     setFormData({
-      nombre:'',
-      email:'',
-      password:'',
-      confirmPassword:'',
+      nombre: '',
+      email: '',
+      password: '',
+      confirmPassword: '',
     })
   };
-  
+
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-    <>
-      <form 
-        className="formulario" 
+      <form
+        className="formulario"
         onSubmit={(e) => validarDatos(e)}
       >
         <div className="form-group">
@@ -104,7 +112,6 @@ const Formulario = ({ setError }) => {
         </button>
         <br />
       </form>
-    </>
   );
 };
 
