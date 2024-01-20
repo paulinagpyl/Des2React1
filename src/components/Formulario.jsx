@@ -29,7 +29,7 @@ const Formulario = ({ setError }) => {
     if (validarPass) {
       setError({
         error: false,
-        msg: "Las password no coincide, prueba nuevamente",
+        msg: "Las password no coinciden, prueba nuevamente",
         color: "danger",
       });
       return;
