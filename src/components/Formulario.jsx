@@ -15,8 +15,8 @@ const Formulario = ({ setError }) => {
     const { nombre, email, password, confirmPassword } = formData;
     const DatosValidar = !nombre || !email || !password || !confirmPassword;
     const validarPass = password !== confirmPassword;
-    const validarMail =
-      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+    // Agregue expresion regular en el email
+    const validarMail = /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
 
     if (DatosValidar) {
       setError({
@@ -24,28 +24,38 @@ const Formulario = ({ setError }) => {
         msg: "Debes completar todos los datos",
         color: "warning",
       });
-    } else if (!validarMail.test(email)) {
+    } else if (!validarMail) {
       setError({
         error: true,
         msg: "El formato del correo electrónico no es válido",
         color: "warning",
       });
-    } else {
+    } else if (
+      // Agregue expresion regular en contraseña y la hice un poco mas segura
+      password.length < 8 ||
+      !/[A-Z]/.test(password) ||
+      !/\d/.test(password)
+    ) {
       setError({
-        error: false,
-        msg: "Login creado exitosamente",
-        color: "success",
+        error: true,
+        msg: "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número",
+        color: "warning",
       });
-    }
-
-    if (validarPass) {
+    } else if (validarPass) {
       setError({
         error: true,
         msg: "Las contraseñas no coinciden, prueba nuevamente",
         color: "danger",
       });
       return;
+    } else {
+      setError({
+        error: false,
+        msg: "Registro creado exitosamente",
+        color: "success",
+      });
     }
+
     setFormData({
       nombre: "",
       email: "",
@@ -112,6 +122,7 @@ const Formulario = ({ setError }) => {
     </form>
   );
 };
+
 Formulario.propTypes = {
   setError: PropTypes.func.isRequired,
 };
