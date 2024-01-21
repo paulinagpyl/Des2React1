@@ -1,11 +1,12 @@
 import { useState } from "react";
+import PropTypes from "prop-types";
 
 const Formulario = ({ setError }) => {
   const [formData, setFormData] = useState({
-    nombre: '',
-    email: '',
-    password: '',
-    confirmPassword: ''
+    nombre: "",
+    email: "",
+    password: "",
+    confirmPassword: "",
   });
 
   const validarDatos = (e) => {
@@ -14,7 +15,8 @@ const Formulario = ({ setError }) => {
     const { nombre, email, password, confirmPassword } = formData;
     const DatosValidar = !nombre || !email || !password || !confirmPassword;
     const validarPass = password !== confirmPassword;
-    const validarMail = /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/
+    const validarMail =
+      /^([a-zA-Z0-9_\.\-])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     if (DatosValidar) {
       setError({
@@ -45,74 +47,73 @@ const Formulario = ({ setError }) => {
       return;
     }
     setFormData({
-      nombre: '',
-      email: '',
-      password: '',
-      confirmPassword: '',
-    })
+      nombre: "",
+      email: "",
+      password: "",
+      confirmPassword: "",
+    });
   };
-
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
   };
 
   return (
-      <form
-        className="formulario"
-        onSubmit={(e) => validarDatos(e)}
-      >
-        <div className="form-group">
-          <br />
-          <input
-            type="text"
-            name="nombre"
-            className="form-control"
-            placeholder="Nombre"
-            onChange={handleChange}
-            value={formData.nombre}
-          />
-        </div>
-        <div className="form-group">
-          <br />
-          <input
-            type="email"
-            name="email"
-            className="form-control"
-            placeholder="micorreo@ejemplo.com"
-            onChange={handleChange}
-            value={formData.email}
-          />
-        </div>
-        <div className="form-group">
-          <br />
-          <input
-            type="password"
-            name="password"
-            className="form-control"
-            placeholder="Contraseña"
-            onChange={handleChange}
-            value={formData.password}
-          />
-        </div>
-        <div className="form-group">
-          <br />
-          <input
-            type="password"
-            name="confirmPassword"
-            className="form-control"
-            placeholder="Confirma tu contraseña"
-            onChange={handleChange}
-            value={formData.confirmPassword}
-          />
-        </div>
+    <form className="formulario" onSubmit={(e) => validarDatos(e)}>
+      <div className="form-group">
         <br />
-        <button type="submit" className="btn btn-primary fullWidth">
-          Registrarse
-        </button>
+        <input
+          type="text"
+          name="nombre"
+          className="form-control"
+          placeholder="Nombre"
+          onChange={handleChange}
+          value={formData.nombre}
+        />
+      </div>
+      <div className="form-group">
         <br />
-      </form>
+        <input
+          type="email"
+          name="email"
+          className="form-control"
+          placeholder="micorreo@ejemplo.com"
+          onChange={handleChange}
+          value={formData.email}
+        />
+      </div>
+      <div className="form-group">
+        <br />
+        <input
+          type="password"
+          name="password"
+          className="form-control"
+          placeholder="Contraseña"
+          onChange={handleChange}
+          value={formData.password}
+        />
+      </div>
+      <div className="form-group">
+        <br />
+        <input
+          type="password"
+          name="confirmPassword"
+          className="form-control"
+          placeholder="Confirma tu contraseña"
+          onChange={handleChange}
+          value={formData.confirmPassword}
+        />
+      </div>
+      <br />
+      <button type="submit" className="btn btn-primary fullWidth">
+        Registrarse
+      </button>
+      <br />
+    </form>
   );
+};
+Formulario.propTypes = {
+  setError: PropTypes.func.isRequired,
 };
 
 export default Formulario;
