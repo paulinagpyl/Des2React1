@@ -9,3 +9,5 @@ const App = () => {
 };
 
 export default App;
+
+//Tengo la configuracion del vscode distinta, si no les gusta el formateo que le dio, disculpen :c

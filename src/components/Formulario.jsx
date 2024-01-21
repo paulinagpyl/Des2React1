@@ -3,6 +3,7 @@ import PropTypes from "prop-types";
 
 const Formulario = ({ setError }) => {
   const [formData, setFormData] = useState({
+    //esto estaba en comillas simples, no se por que se me cambio jejeje
     nombre: "",
     email: "",
     password: "",
@@ -36,6 +37,7 @@ const Formulario = ({ setError }) => {
       !/[A-Z]/.test(password) ||
       !/\d/.test(password)
     ) {
+      //Aca se agrego el mensaje correspondiente a la mejora
       setError({
         error: true,
         msg: "La contraseña debe tener al menos 8 caracteres y contener al menos una letra mayúscula y un número",
@@ -128,3 +130,4 @@ Formulario.propTypes = {
 };
 
 export default Formulario;
+ 
